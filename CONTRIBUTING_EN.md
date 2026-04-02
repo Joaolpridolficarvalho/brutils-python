@@ -5,7 +5,17 @@ Thanks for taking the time to contribute! 🙇‍♀️🙇‍♂️ Every littl
 - [First Contribution](#first-contribution)
 - [Release a New Version](#release-a-new-version)
 
-# First Contribution
+### 💌 Want to contribute, but don’t feel comfortable?
+
+Do you feel like contributing but feel uncomfortable opening issues, PRs, or asking questions publicly?
+
+We know how hard it can be to take the first step in an open space. Insecurity, the fear of making mistakes, or even wondering “is my question silly?” can weigh heavily. And it’s okay to feel that way. 💜
+
+We want you to know that no one has to face this journey alone. If you’d prefer a more private space, you can send an email to cumbucadev@gmail.com, and we’ll be happy to help. Whether it’s to clear up doubts, ask for guidance, or simply have someone to talk to about how to get started.
+
+What matters is that you know: your participation is very welcome, and every contribution, no matter how small it may seem, makes a big difference. ✨
+
+## First Contribution
 
 How to make your first contribution:
 
@@ -19,10 +29,10 @@ How to make your first contribution:
 - [8. Make your Changes](#8-make-your-changes)
 - [9. Test your Changes](#9-test-your-changes)
 - [10. Update READMEs](#10-update-readmes)
-- [11. Commit and push your Changes](#10-commit-and-push-your-changes)
-- [12. Add changelog Entries](#11-add-changelog-entries)
-- [13. Create a GitHub PR](#12-create-a-github-pr)
-- [14. Update your branch if Needed.](#13-update-your-branch-if-needed)
+- [11. Commit and push your Changes](#11-commit-and-push-your-changes)
+- [12. Add changelog Entries](#12-add-changelog-entries)
+- [13. Create a GitHub PR](#13-create-a-github-pr)
+- [14. Update your branch if Needed.](#14-update-your-branch-if-needed)
 
 ### 1. Create a GitHub Account
 
@@ -32,7 +42,7 @@ Ensure you have a [GitHub account][github-join] and you are logged in.
 
 Visit the [brutils issues page][brutils-issues] and find an issue that interests you and hasn't been assigned yet.
 
-Leave a comment in the issue with "bora!". A bot will assign the issue to you. Once assigned, proceed to the next step.
+Leave a comment in the issue with "bora!" (in Brazilian Portuguese, that means "let's go!"). A bot will assign the issue to you. Once assigned, proceed to the next step.
 
 Feel free to ask any questions in the issue's page before or during the development process.
 
@@ -75,11 +85,11 @@ Switched to a new branch '386'
 
 ### 7. Run brutils locally
 
-## Installation with poetry
+#### Installation with poetry
 
-### Requirements
+##### Requirements
 
-- [Python 3.8+][python]
+- [Python 3.10+][python]
 - [Poetry][poetry]
 
 Create a [virtualenv][virtualenv] for brutils and activate it:
@@ -112,13 +122,13 @@ Installing dependencies from lock file
 ...
 ```
 
-## Installation with pip
+#### Installation with pip
 
 If you prefer to use pip, you can install the project in development mode as follows:
 
-### Requirements
+##### Requirements
 
-- [Python 3.8+][python]
+- [Python 3.10+][python]
 - [pip][pip]
 
 Create a [virtualenv][virtualenv] for brutils and activate it using the following command:
@@ -134,7 +144,7 @@ Use the pip command to install the dev and test dependencies through the require
 pip install -r requirements-dev.txt
 ```
 
-## Using locally
+#### Using locally
 
 Now, you can use it [in the same way described in the README.md file](/README_EN.md#usage).
 
@@ -540,13 +550,51 @@ This content is based on the [Keep a Changelog][keep-a-changelog] site, as we fo
 
 ### 13. Create a GitHub PR
 
-[Create a GitHub PR][github-creating-a-pr].
+[Create a GitHub PR][github-creating-a-pr] to submit your changes for review. To ensure your Pull Request (PR) is clear, effective, and reviewed quickly, follow these best practices:
+
+#### Write a Descriptive PR Title
+- Use clear and specific titles to describe the purpose of your changes. A good title helps maintainers understand the PR’s intent at a glance and improves project traceability.
+- **Example**: Instead of “Fix issue,” use “Add utility `convert_uf_to_text` to handle Brazilian state codes.”
+- **Benefits**:
+  - Clear titles make it easier for reviewers to prioritize and understand the PR.
+  - They improve the project’s organization and searchability.
+
+#### Provide a Detailed PR Description
+- Include a comprehensive description in your PR to explain:
+  - **What** was done (e.g., added a new function, fixed a bug).
+  - **Why** it was done (e.g., to address a specific issue or improve performance).
+  - **What issues** were resolved or improvements applied (e.g., link to the issue or describe the enhancement).
+- **Example**:
+This PR adds the convert_uf_to_text utility to convert Brazilian state codes (e.g., "SP") to full state names (e.g., "São Paulo"). It addresses issue #474 by improving code reusability for address formatting. The function includes input validation and updated tests.
+- **Benefits**:
+- Detailed descriptions speed up the review process by providing context.
+- They help future maintainers understand the code’s purpose and history.
+
+#### Link the PR to the Related Issue
+- Reference the issue your PR addresses using keywords like `Closes #474` or `Fixes #474` in the PR description. This automatically closes the issue when the PR is merged.
+- **Example**: `Closes #474`
+- **Benefits**:
+- Linking issues keeps the repository organized and ensures tasks are tracked.
+- It automates issue closure, reducing manual work for maintainers.
+- For more details, see the [GitHub documentation on closing issues automatically](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
+
+#### Verify the PR Description Template
+- Ensure your PR follows the repository’s PR description template (if provided). Check all required items, such as test coverage, documentation updates, or changelog entries.
+- **Example Checklist**: (showing how it looks when completed):
+- [x] Code changes are tested.
+- [x] Documentation (READMEs) is updated.
+- [ ] Changelog entry is added.
+- **Syntax Note**:
+- Use [x] to mark completed items and [ ] for incomplete ones, with no spaces inside the brackets (e.g., [ x ] or [x ] will not render correctly on GitHub).
+- **Benefits**:
+- Adhering to the template ensures your PR is complete and ready for review.
+- It reduces back-and-forth with reviewers, speeding up the merge process.
 
 ### 14. Update your branch if needed.
 
 [Ensure your branch is up to date with main][github-sync-pr].
 
-# Release a New Version
+## Release a New Version
 
 Here you will find how to deploy a new production version of brutils:
 

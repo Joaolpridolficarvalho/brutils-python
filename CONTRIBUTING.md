@@ -5,6 +5,16 @@ Obrigado por dedicar o seu tempo para contribuir! 🙇‍♀️🙇‍♂️ Tod
 - [Primeira Contribuição](#primeira-contribuição)
 - [Lançar uma Nova Versão](#lançar-uma-nova-versão)
 
+## 💌 Quer contribuir, mas não se sente à vontade?
+
+Você tem vontade de contribuir, mas não se sente à vontade em abrir issues, PRs ou fazer perguntas publicamente?
+
+Nós sabemos como pode ser difícil dar o primeiro passo em um espaço aberto. A insegurança, o medo de errar ou até a sensação de “será que minha dúvida é boba?” podem pesar bastante. E tá tudo bem sentir isso. 💜
+
+Queremos que você saiba que aqui ninguém precisa enfrentar esse caminho sem apoio. Se preferir um espaço mais reservado, você pode mandar um e-mail para cumbucadev@gmail.com e teremos o maior prazer em ajudar. Seja para tirar dúvidas, pedir orientação ou simplesmente ter alguém para conversar sobre como começar.
+
+O importante é que você saiba: sua participação é muito bem-vinda, e cada contribuição, por menor que pareça, faz uma grande diferença. ✨
+
 ## Primeira Contribuição
 
 Como fazer a sua primeira contribuição:
@@ -84,7 +94,7 @@ Switched to a new branch '386'
 
 ##### Requisitos
 
-- [Python 3.8+][python]
+- [Python 3.10+][python]
 - [Poetry][poetry]
 
 Crie um [virtualenv][virtualenv] para o brutils e o ative através do comando:
@@ -123,7 +133,7 @@ Se preferir usar pip, você pode instalar o projeto em modo de desenvolvimento d
 
 ##### Requisitos
 
-- [Python 3.8+][python]
+- [Python 3.10+][python]
 - [pip][pip]
 
 Crie um [virtualenv][virtualenv] para o brutils e o ative através do comando:
@@ -143,7 +153,7 @@ pip install -r requirements-dev.txt
 
 Agora você pode usá-lo [da mesma forma descrita no arquivo README.md](/README.md#utilização).
 
-#### Testes
+## Testes 
 
 Execute os testes através do seguinte comando:
 
@@ -161,6 +171,65 @@ OK
 ```
 
 Certifique-se de que o retorno é `OK`, o quê indica todos os testes estão passando e que não tem nenhum falhando.
+
+---
+
+## Testes no Windows
+
+Caso os testes não funcionem ou se você precisar configurar o ambiente do zero, siga as etapas abaixo para preparar o ambiente no Windows.
+
+### Instalar o Chocolatey
+
+Primeiro, abra o PowerShell como administrador e execute o seguinte comando para instalar o **Chocolatey**, que é um gerenciador de pacotes para o Windows:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+### Instalar o `make`
+
+Após a instalação do Chocolatey, instale o **make** com o seguinte comando:
+
+```powershell
+choco install make
+```
+
+Verifique se o `make` foi instalado corretamente com:
+
+```powershell
+where.exe make
+```
+
+### Instalar o Poetry
+
+Instale o **Poetry**, que é uma ferramenta de gerenciamento de dependências e ambientes Python, usando o comando:
+
+```powershell
+choco install poetry
+```
+
+### Instalar as dependências do projeto
+
+Dentro do diretório do seu projeto, abra o terminal e instale as dependências do projeto usando o **Poetry**:
+
+```powershell
+poetry install
+```
+
+### Verificar e configurar o `Makefile`
+
+No arquivo `Makefile` do seu projeto, verifique se a seção de testes está configurada corretamente. Se estiver no Windows, use a seguinte configuração para o alvo `test`:
+
+```makefile
+test:
+ifeq ($(OS),Windows_NT)
+	@set PYTHONDONTWRITEBYTECODE=1 && poetry run python -m unittest discover tests/ -v
+else
+	@PYTHONDONTWRITEBYTECODE=1 poetry run python3 -m unittest discover tests/ -v
+endif
+```
+
+
 
 ### 8. Faça as Suas Alterações
 
@@ -580,7 +649,45 @@ _Este conteúdo é baseado no [site do keep a changelog][keep-a-changelog], já 
 
 ### 13. Crie um PR no GitHub
 
-[Crie um PR no GitHub][github-creating-a-pr].
+[Crie um PR no GitHub][github-creating-a-pr] para enviar suas alterações para revisão. Para garantir que seu Pull Request (PR) seja claro, eficaz e revisado rapidamente, siga estas boas práticas:
+
+#### Escreva um Título Descritivo para o PR
+- Use títulos claros e específicos para descrever o propósito das suas alterações. Um bom título ajuda às pessoas mantenedoras a entender a intenção do PR rapidamente e melhora a rastreabilidade do projeto.
+- **Exemplo**: Em vez de “Corrigir problema”, use “Adiciona utilitário `convert_uf_to_text` para lidar com códigos de estados brasileiros.”
+- **Benefícios**:
+  - Títulos claros facilitam a priorização e o entendimento pelos revisores.
+  - Melhoram a organização e a busca no projeto.
+
+#### Forneça uma Descrição Detalhada do PR
+- Inclua uma descrição completa no seu PR para explicar:
+  - **O que** foi feito (ex.: adicionou uma nova função, corrigiu um bug).
+  - **Por que** foi feito (ex.: para resolver uma issue específica ou melhorar o desempenho).
+  - **Quais problemas** foram resolvidos ou melhorias aplicadas (ex.: referencie a issue ou descreva a melhoria).
+- **Exemplo**:
+Este PR adiciona o utilitário convert_uf_to_text para converter códigos de estados brasileiros (ex.: “SP”) em nomes completos (ex.: “São Paulo”). Resolve a issue #474, melhorando a reutilização de código para formatação de endereços. A função inclui validação de entrada e testes atualizados.
+- **Benefícios**:
+- Descrições detalhadas agilizam o processo de revisão ao fornecer contexto.
+- Ajudam futuros mantenedores a entender o propósito e o histórico do código.
+
+#### Vincule o PR à Issue Relacionada
+- Referencie a issue que seu PR resolve usando palavras-chave como `Closes #474` ou `Fixes #474` na descrição do PR. Isso fecha a issue automaticamente quando o PR for mesclado.
+- **Exemplo**: `Closes #474`
+- **Benefícios**:
+- Vincular issues mantém o repositório organizado e garante o rastreamento de tarefas.
+- Automatiza o fechamento de issues, reduzindo trabalho manual para mantenedores.
+- Para mais detalhes, consulte a [documentação do GitHub sobre fechamento automático de issues](https://docs.github.com/pt/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
+
+#### Verifique o Template de Descrição do PR
+- Certifique-se de que seu PR segue o template de descrição do repositório. Verifique todos os itens obrigatórios, como cobertura de testes, atualizações de documentação ou entradas no changelog.
+- **Exemplo de Checklist**: (mostrando como fica quando preenchido):
+- [x] Alterações no código foram testadas.
+- [x] Documentação (READMEs) foi atualizada.
+- [ ] Entrada no changelog foi adicionada (marque apenas se aplicável).
+- **Nota sobre a Sintaxe**:
+- Use [x] para marcar itens concluídos e [ ] para itens não concluídos, sem espaços dentro dos colchetes (ex.: [ x ] ou [x ] não será renderizado corretamente no GitHub).
+- **Benefícios**:
+- Seguir o template garante que o PR esteja completo e pronto para revisão.
+- Reduz a necessidade de idas e vindas com revisores, acelerando o processo de mesclagem.
 
 ### 14. Atualizar a Sua Branch se Necessário
 
@@ -604,6 +711,12 @@ Para a criação da issue, pode ser utilizado o template de feature, sendo o nom
 
 O nome da branch criada para o release é relacionado ao número da Issue, como mostra [este exemplo](https://github.com/brazilian-utils/brutils-python/pull/326)
 
+#### Faça o Commit
+
+A mensagem do commit deve seguir a estrutura `chore: release <versão>`
+
+Exemplo: `chore: release 2.3.0`
+
 ### 2. Criar um Release PR
 
 #### Atualizar a Versão da Biblioteca
@@ -622,9 +735,9 @@ E adicione os links da versão, como [neste exemplo](https://github.com/antoniam
 
 #### Crie o PR
 
-Crie um PR com o nome `Release v<versão>` contendo as duas alterações acima. Na descrição da Pull Request, adicione o trecho do changelog alterado.
+Crie um PR com o nome `chore: release <versão>` contendo as duas alterações acima. Na descrição da Pull Request, adicione o trecho do changelog alterado.
 
-[Exemplo de Release PR][release-pr-example]
+Exemplo de Release PR: https://github.com/brazilian-utils/brutils-python/pull/596
 
 #### Faça o Merge do PR
 

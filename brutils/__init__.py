@@ -8,6 +8,9 @@ from brutils.cep import generate as generate_cep
 from brutils.cep import is_valid as is_valid_cep
 from brutils.cep import remove_symbols as remove_symbols_cep
 
+# CNH Imports
+from brutils.cnh import is_valid_cnh as is_valid_cnh
+
 # CNPJ Imports
 from brutils.cnpj import format_cnpj
 from brutils.cnpj import generate as generate_cnpj
@@ -23,11 +26,8 @@ from brutils.cpf import remove_symbols as remove_symbols_cpf
 # Currency
 from brutils.currency import convert_real_to_text, format_currency
 
-# Date imports
-from brutils.date import convert_date_to_text
-
 # Date Utils Import
-from brutils.date_utils import is_holiday
+from brutils.date_utils import convert_date_to_text, is_holiday
 
 # Email Import
 from brutils.email import is_valid as is_valid_email
@@ -37,7 +37,16 @@ from brutils.ibge.municipality import (
     get_code_by_municipality_name,
     get_municipality_by_code,
 )
-from brutils.ibge.uf import convert_code_to_uf
+from brutils.ibge.uf import (
+    convert_code_to_uf,
+    convert_name_to_uf,
+    convert_uf_to_name,
+)
+
+# Legal Nature imports
+from brutils.legal_nature import get_description as get_natureza_legal_nature
+from brutils.legal_nature import is_valid as is_valid_legal_nature
+from brutils.legal_nature import list_all as list_all_legal_nature
 
 # Legal Process Imports
 from brutils.legal_process import format_legal_process
@@ -70,6 +79,9 @@ from brutils.pis import generate as generate_pis
 from brutils.pis import is_valid as is_valid_pis
 from brutils.pis import remove_symbols as remove_symbols_pis
 
+# RENAVAM Imports
+from brutils.renavam import is_valid_renavam
+
 # Voter ID Imports
 from brutils.voter_id import format_voter_id
 from brutils.voter_id import generate as generate_voter_id
@@ -94,8 +106,8 @@ __all__ = [
     "generate_cpf",
     "is_valid_cpf",
     "remove_symbols_cpf",
-    # Date
-    "convert_date_to_text",
+    # CNH
+    "is_valid_cnh",
     # Email
     "is_valid_email",
     # Legal Process
@@ -121,17 +133,26 @@ __all__ = [
     "generate_pis",
     "is_valid_pis",
     "remove_symbols_pis",
+    # RENAVAM
+    "is_valid_renavam",
     # Voter ID
     "format_voter_id",
     "generate_voter_id",
     "is_valid_voter_id",
     # IBGE
     "convert_code_to_uf",
-    "get_municipality_by_code",
+    "convert_name_to_uf",
+    "convert_uf_to_name",
     "get_code_by_municipality_name",
+    "get_municipality_by_code",
     # Date Utils
     "is_holiday",
+    "convert_date_to_text",
     # Currency
     "format_currency",
     "convert_real_to_text",
+    # Legal Nature
+    "is_valid_legal_nature",
+    "get_natureza_legal_nature",
+    "list_all_legal_nature",
 ]

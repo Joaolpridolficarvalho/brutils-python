@@ -1,7 +1,8 @@
-<div align="center">
-<h1>🇧🇷 Brazilian Utils</h1>
+![Logo do Brazilian Utils](https://github.com/brazilian-utils/brand/raw/main/github-hero/github-hero-python.png)
 
-<p>Utils library for Brazilian-specific businesses.</p>
+<div align="center">
+
+<p>Biblioteca de utilitários projetada para validar, gerar e manipular dados de acordo com as particularidades do Brasil</p>
 
 [![codecov](https://codecov.io/gh/brazilian-utils/brutils-python/branch/main/graph/badge.svg?token=5KNECS8JYF)](https://codecov.io/gh/brazilian-utils/brutils-python)
 [![Downloads per Month](https://shields.io/pypi/dm/brutils)](https://pypistats.org/packages/brutils)
@@ -67,7 +68,9 @@ False
 - [Email](#email)
   - [is\_valid\_email](#is_valid_email)
 - [Data](#date)
-  - [convert\_date\_to_text](#convert_date_to_text) 
+  - [convert\_date\_to_text](#convert_date_to_text)
+- [CNH](#cnh)
+  - [is\_valid\_cnh](#is_valid_cnh)
 - [Placa de Carro](#placa-de-carro)
   - [is\_valid\_license\_plate](#is_valid_license_plate)
   - [format\_license\_plate](#format_license_plate)
@@ -81,23 +84,31 @@ False
   - [remove\_symbols\_pis](#remove_symbols_pis)
   - [generate\_pis](#generate_pis)
 - [Processo Jurídico](#processo-jurídico)
-- [is\_valid\_legal\_process](#is_valid_legal_process)
+  - [is\_valid\_legal\_process](#is_valid_legal_process)
   - [format\_legal\_process](#format_legal_process)
   - [remove\_symbols\_legal\_process](#remove_symbols_legal_process)
   - [generate\_legal\_process](#generate_legal_process)
+- [RENAVAM](#renavam)
+  - [is_valid_renavam](#is_valid_renavam)
 - [Titulo Eleitoral](#titulo-eleitoral)
   - [is\_valid\_voter\_id](#is_valid_voter_id)
   - [format\_voter\_id](#format_voter_id)
   - [generate\_voter\_id](#generate_voter_id)
 - [IBGE](#ibge)
-  - [get_code_by_municipality_name](#get_code_by_municipality_name)
   - [convert_code_to_uf](#convert_code_to_uf)
+  - [convert_uf_to_name](#convert_uf_to_name)
+  - [convert_name_to_uf](#convert_name_to_uf)
+  - [get_code_by_municipality_name](#get_code_by_municipality_name)
   - [get\_municipality\_by\_code](#get_municipality_by_code)
 - [Feriados](#feriados)
   - [is_holiday](#is_holiday)
 - [Monetário](#monetário)
   - [format\_currency](#format_currency)
   - [convert\_real\_to\_text](#convert_real_to_text)
+- [Natureza Jurídica](#natureza-jurídica)
+  - [is_valid_legal_nature](#is_valid_legal_nature)
+  - [get_legal_nature_description](#get_legal_nature_description)
+  - [list_all_legal_nature](#list_all_legal_nature)
 
 ## CPF
 
@@ -663,6 +674,37 @@ None
 "Primeiro de agosto de dois mil e vinte e quatro"
 ````
 
+## CNH
+
+### is_valid_cnh
+
+Verifica se o número de registro de CNH (Carteira de Habilitação Nacional) brasileiro é válido.
+Para que um número de CNH seja considerado válido, a entrada deve ser uma string contendo
+exatamente 11 dígitos numéricos. Esta função não verifica se o número da CNH é real, apenas
+valida os dígitos verificadores.
+
+Argumentos:
+
+- cnh (str): A string contendo o número de registro de CNH a ser verificado.
+
+Retorno:
+
+- bool: True se o número de registro da CNHN for válido (11 dígitos), False caso contrário.
+
+Exemplo:
+
+```python
+>>> from brutils import is_valid_cnh
+>>> is_valid_cnh("12345678901")
+False
+>>> is_valid_cnh("A2C45678901")
+False
+>>> is_valid_cnh("98765432100")
+True
+>>> is_valid_cnh("987654321-00")
+True
+```
+
 
 ## Placa de Carro
 
@@ -1146,25 +1188,6 @@ Exemplo:
 >>>
 ```
 
-### get_municipality_by_code
-
-Retorna o nome do município e a UF para um código do IBGE.
-
-Args:
-  * code (str): O código do IBGE para o município.
-
-Returns:
-  * tuple: Retorna uma Tupla formatado como ("Município", "UF").
-  * None: Retorna None se o código for inválido.
-
-Example:
-
-```python
->>> from brutils import get_municipality_by_code
->>> get_municipality_by_code(3550308)
-("São Paulo", "SP")
-```
-
 ### get_code_by_municipality_name
 
 Retorna o código IBGE para um dado nome de município e código de UF.
@@ -1194,6 +1217,73 @@ Exemplo:
 None
 >>> get_code_by_municipality_name("Municipio Inexistente", "RS")
 None
+```
+
+### get_municipality_by_code
+
+Retorna o nome do município e a UF para um código do IBGE.
+
+Args:
+  * code (str): O código do IBGE para o município.
+
+Returns:
+  * tuple: Retorna uma Tupla formatado como ("Município", "UF").
+  * None: Retorna None se o código for inválido.
+
+Example:
+
+```python
+>>> from brutils import get_municipality_by_code
+>>> get_municipality_by_code(3550308)
+("São Paulo", "SP")
+```
+
+### convert_uf_to_name
+Converte um código de UF brasileiro (por exemplo, 'SP') no nome completo do estado ('São Paulo').
+
+A busca é case-insensitive (não diferencia maiúsculas de minúsculas) e ignora espaços em branco ao redor.
+
+Argumentos:
+  * uf (str): Código de UF com duas letras.
+
+Retorna:
+  * str | None: O nome completo do estado, ou ``None`` se o código for inválido.
+
+Exemplo:
+
+```python
+>>> from brutils.ibge.uf import convert_uf_to_name
+>>> convert_uf_to_name('SP')
+'São Paulo'
+>>> convert_uf_to_name('rj')
+'Rio de Janeiro'
+```
+
+### convert_name_to_uf
+Converte o nome completo de um estado brasileiro para seu código UF.
+
+Esta função recebe o nome completo de um estado brasileiro e retorna o código UF de duas letras correspondente. A comparação ignora maiúsculas/minúsculas e acentos.
+
+Argumentos:
+  * state_name (str): O nome completo do estado (por exemplo, 'São Paulo', 'sao paulo').
+
+Retorna:
+  * str | None: O código UF se encontrado, ou None se o nome do estado for inválido.
+
+Exemplo:
+
+```python
+>>> from brutils.ibge.uf import convert_name_to_uf
+>>> convert_name_to_uf('São Paulo')
+'SP'
+>>> convert_name_to_uf('sao paulo')
+'SP'
+>>> convert_name_to_uf('Rio de Janeiro')
+'RJ'
+>>> convert_name_to_uf('rio de janeiro')
+'RJ'
+>>> convert_name_to_uf('Estado Inválido')
+>>>
 ```
 
 ## Feriados
@@ -1234,7 +1324,7 @@ True
 ### format_currency
 
 Formata um número seguindo o padrão monetário brasileiro. O número será formatado
-adicionando o símbolo R$ como prefixo, vírgula como separador decimal, e ponto como 
+adicionando o símbolo R$ como prefixo, vírgula como separador decimal, e ponto como
 agrupador de milhar.
 
 Argumentos:
@@ -1289,6 +1379,98 @@ Exemplo:
 'Menos cinquenta reais e vinte e cinco centavos'
 >>> convert_real_to_text("invalid")
 None
+```
+
+## Natureza Jurídica
+
+### is_valid_legal_nature
+
+Valida se o código informado existe na tabela oficial. Aceita `NNNN` ou `NNN-N`.  
+O valor é **normalizado** antes da checagem: remove espaços, mantém apenas dígitos e aceita hífen entre o 3º e 4º dígitos.
+
+**Argumentos**
+- `code (str)`: Código de 4 dígitos (ex.: `"2062"` ou `"206-2"`)
+
+**Retorna**
+- `bool`: `True` se existir na tabela, `False` caso contrário.
+
+**Exemplo**
+```python
+>>> from brutils import legal_nature
+>>> legal_nature.is_valid("2062")   
+True
+>>> legal_nature.is_valid("206-2")  
+True
+>>> legal_nature.is_valid("9999")   
+False
+```
+
+### get_legal_nature_description
+
+Retorna a **descrição oficial** do código de Natureza Jurídica. Aceita `NNNN` ou `NNN-N`. Aplica a mesma normalização do `is_valid`.
+
+**Argumentos**
+
+* `code (str)`: Código de 4 dígitos
+
+**Retorna**
+
+* `str | None`: Descrição correspondente ou `None` se o código for inválido ou inexistente.
+
+**Exemplo**
+
+```python
+>>> from brutils import legal_nature
+>>> legal_nature.get_description("2062")   
+'Sociedade Empresária Limitada'
+>>> legal_nature.get_description("101-5")  
+'Órgão Público do Poder Executivo Federal'
+>>> legal_nature.get_description("0000")   
+None
+```
+
+### list_all_legal_nature
+
+Retorna uma cópia do dicionário completo `{codigo: descricao}`.
+
+**Retorna**
+
+* `dict[str, str]`: Mapeamento de todos os códigos para suas descrições.
+
+**Exemplo**
+
+```python
+>>> from brutils import legal_nature 
+>>> data = legal_nature.list_all()
+>>> len(data) > 0               
+True
+>>> data["2062"]                 
+'Sociedade Empresária Limitada'
+## RENAVAM
+
+### is_valid_renavam
+
+Valida se os dígitos de verificação do RENAVAM fornecido
+correspondem aos seus 10 dígitos iniciais. Esta função não verifica a existência do veículo;
+ela apenas valida o formato da string e o dígito verificador.
+
+Argumentos:
+
+- renavam (str): O RENAVAM a ser validado, uma string de 11 dígitos.
+
+Retorna:
+
+- bool: Verdadeiro se o RENAVAM for válido  
+  Falso caso contrário.
+
+Exemplo:
+
+```python
+>>> from brutils import is_valid_renavam
+>>> is_valid_renavam("86769597308")
+True
+>>> is_valid_renavam("12345678901")
+False
 ```
 
 # Novos Utilitários e Reportar Bugs
